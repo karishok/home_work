@@ -11,7 +11,7 @@ var ErrInvalidString = errors.New("invalid string")
 func Unpack(input string) (output string, err error) {
 	for i, r := range input {
 		if unicode.IsDigit(r) {
-			if  i == 0 || unicode.IsDigit(rune(input[i-1])) {
+			if i == 0 || unicode.IsDigit(rune(input[i-1])) {
 				return "", ErrInvalidString
 			}
 			n := int(r - '0')

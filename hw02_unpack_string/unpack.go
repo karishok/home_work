@@ -9,6 +9,7 @@ import (
 var ErrInvalidString = errors.New("invalid string")
 
 func Unpack(input string) (output string, err error) {
+	var previous rune
 	for i, r := range input {
 		if unicode.IsDigit(r) {
 			if i == 0 || unicode.IsDigit(rune(input[i-1])) {
@@ -16,7 +17,7 @@ func Unpack(input string) (output string, err error) {
 			}
 			n := int(r - '0')
 			for j := 1; j < n; j++ {
-				output += string(input[i-1])
+				output += string(previous)
 			}
 			if n == 0 {
 				length := utf8.RuneCountInString(output)
@@ -24,8 +25,9 @@ func Unpack(input string) (output string, err error) {
 			}
 		}
 		if unicode.IsLetter(r) {
-			output += string(input[i])
+			output += string(r)
 		}
+		previous = r
 	}
 	return output, nil
 }

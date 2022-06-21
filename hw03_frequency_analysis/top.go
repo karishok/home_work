@@ -15,28 +15,26 @@ func Top10(text string) []string {
 		word = strings.ToLower(word)
 		word = strings.TrimRight(word, "-,.:;")
 		if word != "" {
-			frequencyWord[word] += 1
+			frequencyWord[word]++
 		}
 	}
 	frequencyMap := make(map[int][]string)
-	for word, frequency := range frequencyWord{
+	for word, frequency := range frequencyWord {
 		frequencyMap[frequency] = append(frequencyMap[frequency], word)
 	}
-	var frequencySlice []int
-	for frequency, wordSlice := range frequencyMap{
-		sort.Slice(wordSlice, func (d, e int) bool {
+	frequencySlice := make([]int, 0)
+	for frequency, wordSlice := range frequencyMap {
+		sort.Slice(wordSlice, func(d, e int) bool {
 			return wordSlice[d] < wordSlice[e]
 		})
 		frequencySlice = append(frequencySlice, frequency)
 	}
-	sort.Slice(frequencySlice, func (d, e int) bool {
+	sort.Slice(frequencySlice, func(d, e int) bool {
 		return frequencySlice[d] > frequencySlice[e]
 	})
 	var frequencySortSlice []string
-	for _, frequency := range frequencySlice{
-		for _, word := range frequencyMap[frequency]{
-			frequencySortSlice = append(frequencySortSlice, word)
-		}
+	for _, frequency := range frequencySlice {
+		frequencySortSlice = append(frequencySortSlice, frequencyMap[frequency]...)
 	}
 	return frequencySortSlice[:10]
 }

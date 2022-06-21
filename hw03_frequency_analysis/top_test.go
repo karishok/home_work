@@ -1,13 +1,12 @@
 package hw03frequencyanalysis
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/require"
+	"testing"
 )
 
 // Change to true if needed.
-var taskWithAsteriskIsCompleted = false
+var taskWithAsteriskIsCompleted = true
 
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
 	другом   Кристофером   Робином,   головой   вниз,  пересчитывая
@@ -43,9 +42,27 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+var numbers = `1 22 3 43 4759 32 12 355 22 43 766 3 1 22 22 355 7 3 32 3 332 234 56 43 234`
+
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
+	})
+
+	t.Run("number", func(t *testing.T) {
+		expected := []string{
+			"22",
+			"3",
+			"43",
+			"1",
+			"234",
+			"32",
+			"355",
+			"12",
+			"332",
+			"4759",
+		}
+		require.Equal(t, expected, Top10(numbers))
 	})
 
 	t.Run("positive test", func(t *testing.T) {
